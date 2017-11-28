@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <% include partials/template/head.ejs %>
+  </head>
+  <body id="<%= pageID %>">
+    <h1><%= title %></h1>
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-8">
+            <% seats.forEach(function(item) { %>
+                 <li> <%= item.name %> is in  <%= item.summary %></li>
+                <% }); %>
+            <% if (pageID == 'seatDetail') { %>
+              <div id="historygraphcontainer" style="min-width:320px; max-width:700px;margin: 0 auto"></div>
+            <% include partials/content/historygraph.ejs %>
+            <% } %>
+        </div><!-- primary -->
+      </div>
+    </div><!-- container -->
+    <% include partials/template/jsdefault.ejs %>
+  </body>
+</html>

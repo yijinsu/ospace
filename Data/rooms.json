@@ -1,0 +1,23 @@
+{
+  "rooms": [{
+
+    "name": "Room A",
+    "shortname" : "room_a",
+    "summary" : "with sensors",
+    "description": "The first room on the second floor at the end of the hall",
+    "seats": ["1a","2a","3a"]
+  },{
+
+    "name": "Room B",
+    "shortname" : "room_b",
+    "summary" : "with sensors",
+    "description": "The second room on the second floor ",
+    "seats": ["1b","2b","3b","4b","5b","6b"]}
+  ,{
+    "name": "Room C",
+    "shortname" : "room_c",
+    "summary" : "with sensors",
+    "description": "The third room on the second floor ",
+    "seats": ["1c","2c","3c","4c","5c","6c","7c","8c","9c","10c"]
+    }]
+}

@@ -1,0 +1,54 @@
+<article class="historygraph ">
+<p> a test!</p>
+    <script>
+         $(document).ready(function() {
+
+             var datapoints = [];
+             var trackDate = <%- trackdate %>;
+             var trackTime = <%- tracktime %>;
+             var avaliability = <%- occupation %>;
+
+             var len = trackTime.length;
+             for (var i = 0; i <len; i++){
+                 datapoints.push([trackTime[i],avaliability[i]]);
+             }
+             //console.log(datapoints);
+
+             var chart = Highcharts.chart('historygraphcontainer', {
+                 chart: {
+                     type: 'column'
+                 },
+                 title: {
+                     text: 'Seat availability during the past 8 hours'
+                 },
+                 subtitle: {
+                     text: 'Date 2017-11-26'
+                 },
+                 plotOptions: {
+                     column: {
+                         depth: 25
+                     }
+                 },
+                 xAxis: {
+                     type:'category'
+
+                 },
+                 yAxis: {
+                     title: {
+                         text: null
+                     }
+                     ,labels:
+                         {
+                             enabled: false
+                         }
+                 },
+                 series: [{
+                     name: 'Occupied',
+                     data: datapoints
+
+                 }]
+             });
+         });
+
+        </script>
+</article>

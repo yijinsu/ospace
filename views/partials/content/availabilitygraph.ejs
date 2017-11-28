@@ -1,0 +1,137 @@
+<article class="availabilitygraph ">
+
+    <script>
+        $(document).ready(function() {
+
+            var seatsData = <%- seats %>;
+            var dataList = [];
+            var len = seatsData.length;
+
+            for (var i = 0; i <len; i++){
+
+                dataList.push({
+                    id : seatsData[i],
+                    name : "seat " + seatsData[i],
+                    x: i*2,
+                    y: len-(i%2+1),
+                    value : 0
+                })
+
+            }
+            //console.log(dataList);
+
+            var chart = Highcharts.chart({
+                chart: {
+                    renderTo: 'graphcontainer',
+                    type: 'tilemap',
+                    height: '100%'
+                },
+                title: {
+                    text: 'Seat avaliability'
+                },
+                subtitle: {
+                    text: 'Is the spot you are looking for avaliable?'
+                },
+                xAxis: {
+                    visible: false
+                },
+
+                yAxis: {
+                    visible: false
+                },
+
+                legend: {
+                    enabled: true,
+                    layout: 'vertical',
+                    align: 'left',
+                    y: -20,
+                    floating: true
+                },
+                colorAxis: {
+                    dataClasses: [{
+                        to: 1,
+                        color: '#9fff80',
+                        name: 'Empty'
+                    }, {
+                        from: 1,
+                        color: '#ffffb3',
+                        name: 'Occupied'
+                    }]
+                },
+
+                tooltip: {
+                    headerFormat: '',
+                    pointFormat: 'Click to see when it is usually available'
+                },
+
+                plotOptions: {
+                    series: {
+                        tileShape: 'circle',
+                        dataLabels: {
+                            enabled: true,
+                            color: '#000000',
+                            format: '{point.name}'
+                        },
+                        borderWidth: 1,
+                        borderColor: '#777',
+                        point: {
+                            events: {
+                                click: function () {
+                                    location.href = '/seats/seat_'+ this.options.id;
+                                }
+                            }
+                        }
+                    }
+                },
+
+                series: [{
+                    color: '#fdfdfd',
+                    data:  dataList
+
+                }]
+
+            });
+
+          var socket = io();
+          socket.on('message', function(data){
+              // room A now, other rooms are not set up
+              console.log(data);
+              var message = data.split(",");
+              var signals =["0","0","0"];
+
+              if (message[0] == '1a'){
+                  signals[0] = message[1];
+                  console.log(signals[0]);
+              }
+
+              if (message[0] == '2a'){
+                  signals[1] = message[1];
+                  console.log(signals[0]);
+              }
+              if (message[0] == '3a'){
+                  signals[2] = message[1];
+                  console.log(signals[0]);
+              }
+              console.log('signals are '+ signals);
+
+              var seats =[];
+              for (var i = 0; i <len; i++){
+
+                seats.push({
+                    id : seatsData[i],
+                    name : "seat " + seatsData[i],
+                    x: i*2,
+                    y: len-(i%2+1),
+                    value : parseInt(signals[i])
+                })
+            }
+            console.log(seats);
+            chart.series[0].setData(seats,false);
+            chart.redraw();
+          });
+
+
+
+        });
+    </script>
+</article>

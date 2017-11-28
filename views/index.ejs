@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+
+  </head>
+  <body>
+    <h1><%= title %></h1>
+    <p>Welcome to <%= title %></p>
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-8">
+         <% rooms.forEach(function(item) { %>
+                  <li><a href="/rooms/<%= item.shortname %>"><%= item.name %></a></li>
+                <% }); %>
+        </div><!-- primary -->
+      </div>
+    </div><!-- container -->
+
+  </body>
+</html>
